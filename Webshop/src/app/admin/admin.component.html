@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">     
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
+</head>
+
+<header>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <div class="navbar-brand"><h4 class="brand">Matthew's Pizzeria</h4></div>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a [routerLink]="['/products']"><h5 class="navitem">Pizzák</h5></a></li>
+        <li><a [routerLink]="['/drinks']"><h5 class="navitem">Italok</h5></a></li>
+        <li><a [routerLink]="['/basket']"><h5 class="navitem">Kosár [{{product_count}}]</h5></a></li>
+        <li *ngIf="accessLevel=='admin'" class="active"><a [routerLink]="['/admin']"><h5 class="navitem">Admin</h5></a></li>
+        <li><a [routerLink]="['/login']"><h5 class="navitem">Kijelentkezés</h5></a></li>
+      </ul>
+    </div>
+  </nav>     
+</header>
+  
+<body>
+  <div class="firstrow"></div>
+  <div class="basic_div">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <div class="row">
+              <div class="title">Pizza szerkesztése</div>
+                <div class="features" style="margin-top: 8%;">
+                  <div class="row">
+                    <div class="row" style="margin-top: 5%;">Termék név:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="product_id" (input)="get_products()">
+                    </div>
+                    <div class="row" style="margin-top: 5%;">Ár:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="product_price">
+                    </div>
+                    <div class="row" style="margin-top: 5%;">Mennyiség:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="product_quantity">
+                    </div>
+                </div>
+                <!--/features-->
+              </div>
+          </div>
+          <div class="row" style="margin-top: 2%;">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <a class="btn" (click)="edit_product()">{{product_btn}}</a>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <div class="row" style="margin-top: 2%;">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <a class="btn" (click)="delete_product()">Törlés</a>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="row">
+              <div class="title">Ital szerkesztése</div>
+                <div class="features" style="margin-top: 8%;">
+                  <div class="row">
+                    <div class="row" style="margin-top: 5%;">Termék név:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="drink_id" (input)="get_drinks()">
+                    </div>
+                    <div class="row" style="margin-top: 5%;">Ár:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="drink_price">
+                    </div>
+                    <div class="row" style="margin-top: 5%;">Mennyiség:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="drink_quantity">
+                    </div>
+                </div>
+                <!--/features-->
+              </div>
+          </div>
+          <div class="row" style="margin-top: 2%;">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <a class="btn" (click)="edit_drink()">{{drink_btn}}</a>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <div class="row" style="margin-top: 2%;">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <a class="btn" (click)="delete_drink()">Törlés</a>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <div class="row">
+              <div class="title">Felhasználó szerkesztése</div>
+                <div class="features" style="margin-top: 8%;">
+                  <div class="row">
+                    <div class="row" style="margin-top: 5%;">Felhasználónév:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="username" (input)="get_users()">
+                    </div>
+                    <div class="row" style="margin-top: 5%;">Jelszó:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="password" [(ngModel)]="pwd">
+                    </div>
+                    <div class="row" style="margin-top: 5%;">Email:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="email">
+                    </div>
+                    <div class="row" style="margin-top: 5%;">Jogosultság:</div>
+                    <div class="row" style="margin-top: 2%;">
+                      <input type="text" [(ngModel)]="accessLvl">
+                    </div>
+                </div>
+                <!--/features-->
+              </div>
+          </div>
+          <div class="row" style="margin-top: 2%;">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <a class="btn" (click)="add_user()">Hozzáadás</a>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          <div class="row" style="margin-top: 2%;">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+              <a class="btn" (click)="delete_user()">Törlés</a>
+            </div>
+            <div class="col-md-2"></div>
+          </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</body>
+
+</html>
+
+

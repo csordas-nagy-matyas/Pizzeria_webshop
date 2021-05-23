@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">     
+</head>
+
+<header>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <div class="navbar-brand"><h4 class="brand">Matthew's Pizzeria</h4></div>
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a [routerLink]="['/products']"><h5 class="navitem">Pizzák</h5></a></li>
+        <li><a [routerLink]="['/drinks']"><h5 class="navitem">Italok</h5></a></li>
+        <li><a [routerLink]="['/basket']"><h5 class="navitem">Kosár [{{product_count}}]</h5></a></li>
+        <li *ngIf="accessLevel=='admin'"><a [routerLink]="['/admin']"><h5 class="navitem">Admin</h5></a></li>
+        <li><a [routerLink]="['/login']"><h5 class="navitem">Kijelentkezés</h5></a></li>
+      </ul>
+    </div>
+  </nav>     
+</header>
+  
+<body>
+  <div class="firstrow"></div>
+  <div *ngFor="let x of products">
+    <div class="card">
+      <div class="icon">
+        <img *ngIf="x.quantity == '0'" src="https://www.onlygfx.com/wp-content/uploads/2017/12/sold-out-stamp-3.png" height="100" width="100">
+        <img *ngIf="x.quantity != '0'" src="https://anthropology.osu.edu/sites/default/files/Pizza.png" height="100" width="100">
+       
+      </div><!--/icon-->
+
+      <div class="title">{{x.id}}</div>
+      <div class="features">
+        <ul>
+          <li>{{x.price}} Ft</li>
+        </ul>
+      </div><!--/features-->
+    
+      <a *ngIf="x.quantity != '0'" class="btn" (click)="add_to_basket(x)">Kosárba</a>
+      <a *ngIf="x.quantity == '0'" class="btn isDisabled">Kosárba</a>
+    </div>
+   </div>
+
+</body>
+</html>
+

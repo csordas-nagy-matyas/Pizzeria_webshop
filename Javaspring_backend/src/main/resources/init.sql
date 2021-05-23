@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS products;
+DROP TABLE IF EXISTS transactions;
+CREATE TABLE products(id SERIAL PRIMARY KEY, name VARCHAR(255), price INTEGER);
+CREATE TABLE transactions(id SERIAL PRIMARY KEY, date VARCHAR(255), name VARCHAR(255), amount INTEGER);
+DROP SEQUENCE IF EXISTS hibernate_sequence;
+CREATE SEQUENCE hibernate_sequence START 1;

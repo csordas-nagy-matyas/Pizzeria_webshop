@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+    
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"> 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">     
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script> 
+</head>
+
+<header>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <div class="navbar-brand"><h4 class="brand">Matthew's Pizzeria</h4></div>
+      </div>
+      <ul class="nav navbar-nav">
+        <li><a [routerLink]="['/products']"><h5 class="navitem">Pizzák</h5></a></li>
+        <li><a [routerLink]="['/drinks']"><h5 class="navitem">Italok</h5></a></li>
+        <li class="active"><a [routerLink]="['/basket']"><h5 class="navitem">Kosár [{{product_count}}]</h5></a></li>
+        <li *ngIf="accessLevel=='admin'"><a [routerLink]="['/admin']"><h5 class="navitem">Admin</h5></a></li>
+        <li><a [routerLink]="['/login']"><h5 class="navitem">Kijelentkezés</h5></a></li>
+      </ul>
+    </div>
+  </nav>     
+</header>
+  
+<body>
+  <div class="firstrow"></div>
+  <div class="basic_div">
+      <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+          <div *ngIf="success_order=='error'" class="dialog">
+            <h3>Hiba</h3>
+            <h4 style="white-space: pre-wrap">{{error_msg}}</h4>
+            <a class="btn" [routerLink]="['/basket']" (click)="dialog_back()">Vissza</a>
+          </div>
+          <div *ngIf="success_order!='error'" class="card">
+            <div *ngIf="success_order=='default'" class="row">
+              <div class="col-md-6">
+                <div class="title">Kosár</div>
+                <div class="features" style="margin-top: 8%;">
+                  <div class="row">
+                  <div class="col-md-10">
+                    <ul>
+                      <li *ngFor="let x of selected_products" style="margin-top: 5%;">{{x.id}} | {{x.price}} Ft</li>
+                     
+                   </ul>
+                  </div>
+                  <div class="col-md-2" style="margin-top: 3%;">
+                      <a *ngFor="let x of selected_products" class="remove_btn" (click)="remove_selected_item(x.id)">X</a>
+                  </div>
+                </div><!--/features-->
+              </div>
+              </div>
+              <div class="col-md-6">
+                <div class="title">Szállítási információk</div>
+                <div class="row">
+                  <div class="row" style="margin-top: 5%;">Teljes név:</div>
+                  <div class="row" style="margin-top: 2%;">
+                    <input type="text" [(ngModel)]="name">
+                  </div>
+                  <div class="row" style="margin-top: 5%;">Telefonszám:</div>
+                  <div class="row" style="margin-top: 2%;">
+                    <input type="text" [(ngModel)]="telephone">
+                  </div>
+                  <div class="row" style="margin-top: 5%;">Cím:</div>
+                  <div class="row" style="margin-top: 2%;">
+                    <input type="text" [(ngModel)]="address">
+                  </div>
+                  <div class="row" style="margin-top: 5%;">Email:</div>
+                  <div class="row" style="margin-top: 2%;">
+                    <input type="text" [(ngModel)]="email">
+                  </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" style="margin-top: 2%;">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <div *ngIf="success_order=='default'" class="title">Összesen: {{final_price}} Ft</div>
+              <div *ngIf="success_order=='success'" class="title">Sikeres rendelés! <br>Köszönjük vásárlását!</div>
+              <!--<div *ngIf="success_order=='error'" class="title">Sajnáljuk, az Ön által választott termékek közül az egyik nem elérhető!</div>-->
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+              <a *ngIf="success_order=='default'" class="btn" (click)="make_order()">Rendelés leadása</a>
+              <a *ngIf="success_order=='success'" class="btn" [routerLink]="['/products']">Vissza a főoldalra</a>
+              <!--<a *ngIf="success_order=='error'" class="btn" [routerLink]="['/products']">Vissza a főoldalra</a>-->
+            </div>
+            <div class="col-md-3"></div>
+          </div>
+          </div>
+        </div>
+        <div class="col-md-2"></div>
+      </div>
+  </div>
+</body>
+</html>
+

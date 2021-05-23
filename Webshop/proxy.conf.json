@@ -1,0 +1,11 @@
+{
+    "/server": {
+        "target": "https://webshop-node-heroku.herokuapp.com/",
+        "secure": true,
+        "changeOrigin": true,
+        "pathRewrite": {
+            "^/server": ""
+        }
+    }
+
+}
